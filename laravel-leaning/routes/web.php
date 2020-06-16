@@ -10,6 +10,6 @@ Route::get('/index', 'IndexController@index');
 
 Route::get('/quit', 'IndexController@closeSession');
 
-Route::get('/index', 'IndexController@index');
+Route::get('/', 'IndexController@index');
 
 Route::post('/generate', 'IndexController@generate');
