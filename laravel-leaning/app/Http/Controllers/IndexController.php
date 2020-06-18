@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Support\Str;
 
 use function view;
@@ -32,10 +33,15 @@ class IndexController
         /*
          * UUID generator
          */
-        setcookie('uuid', Str::uuid()->toString(), time() + 60 * 60 * 12, '/', null);
-        setcookie('uuid-time', time() + 60 * 60, time() + 60 * 60 * 12, '/', null);
+        setcookie('uuid', $uuid = Str::uuid()->toString(), time() + 60 * 60 * 12, '/', '');
+        setcookie('uuid-time', (string)($t = time() + 60 * 60), time() + 60 * 60 * 12, '/', '');
 
-        return $this->index();
+        $model = new User();
+        $model->time = $t;
+        $model->uuid = $uuid;
+        $model->save();
+
+        return redirect('/index');
     }
 
     public function closeSession()
